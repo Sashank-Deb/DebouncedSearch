@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Parcel Sandbox</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<div id="app"></div>
+		<input id="search" type="text"  placeholder="Search by name or cuisine type"/>
+	<ul id="searchResults"></ul>
+	<script>
+const search= document.getElementById("search");
+const results= document.getElementById("searchResults");
+
+let timer;
+
+console.log(search.value)
+function searchRestaurants(){
+  const restaurants = [
+    { name: 'Italian Pizza', cuisine: 'Italian' },
+    { name: 'Thai Curry', cuisine: 'Thai' },
+    { name: 'Mexican Tacos', cuisine: 'Mexican' },
+    { name: 'Indian Curry', cuisine: 'Indian' },
+    { name: 'Japanese Sushi', cuisine: 'Japanese' },
+    { name: 'Chinese Noodles', cuisine: 'Chinese' }
+  ];
+  console.count();
+  results.innerHTML=""
+  let searchedItem= search.value.trim().toLowerCase();
+  if (searchedItem.length>1){
+    const filteredRestaurants= restaurants.filter((item)=>{
+       const filteredName= item.name.trim().toLowerCase().includes(searchedItem)
+       const filteredCuisine= item.cuisine.trim().toLowerCase().includes(searchedItem)
+       return filteredCuisine || filteredName
+     })
+         // Display matching restaurants
+         filteredRestaurants.map(restaurant => {
+           const li = document.createElement('li');
+           li.innerText = restaurant.name + ' - ' + restaurant.cuisine;
+           results.appendChild(li);
+         });
+  }
+}
+
+search.addEventListener('input',()=>{
+    clearTimeout(timer);
+    timer= setTimeout(searchRestaurants,300)
+})
+
+	</script>
+</body>
+
+</html>
